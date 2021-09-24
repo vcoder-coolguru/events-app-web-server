@@ -4,7 +4,7 @@
 // variables:
 //      https://github.com/vcoder-coolguru/events-app-web-server.git
 //      main
-//      (dtc-092021-u413)
+//      dtc-092021-u413
 //      web-server-image
 //      cnd-cluster 
 //      us-central1-c
@@ -50,16 +50,16 @@ pipeline {
             steps {
                 echo "build id = ${env.BUILD_ID}"
                 echo 'Tests passed on to build Docker container'
-                sh "gcloud builds submit -t gcr.io/(dtc-092021-u413)/web-server-image:v2.${env.BUILD_ID} ."
+                sh "gcloud builds submit -t gcr.io/dtc-092021-u413/web-server-image:v2.${env.BUILD_ID} ."
             }
         }        
          stage('Stage 5') {
             steps {
                 echo 'Get cluster credentials'
-                sh 'gcloud container clusters get-credentials cnd-cluster --zone us-central1-c --project (dtc-092021-u413)'
+                sh 'gcloud container clusters get-credentials cnd-cluster --zone us-central1-c --project dtc-092021-u413'
                 echo 'Update the image'
-                echo "gcr.io/(dtc-092021-u413)/web-server-image:2.${env.BUILD_ID}"
-                sh "kubectl set image deployment/demo-ui demo-ui=gcr.io/(dtc-092021-u413)/web-server-image:v2.${env.BUILD_ID} --record"
+                echo "gcr.io/dtc-092021-u413/web-server-image:2.${env.BUILD_ID}"
+                sh "kubectl set image deployment/demo-ui demo-ui=gcr.io/dtc-092021-u413/web-server-image:v2.${env.BUILD_ID} --record"
             }
         }
     }
